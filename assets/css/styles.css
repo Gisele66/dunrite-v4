@@ -534,17 +534,48 @@ h1, h2, h3, h4 { font-family: 'Sora', system-ui, sans-serif; line-height: 1.12; 
   flex-direction: column;
   gap: 16px;
 }
-.contact-split__social { grid-column: 1; margin-top: 0; }
+.contact-split__social { grid-column: 1; margin-top: 0; gap: 1.25rem; }
 .contact-split__social a {
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  display: grid;
-  place-items: center;
-  transition: background .25s, transform .25s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: filter .22s ease, transform .22s ease;
 }
-.contact-split__social a:hover { transform: translateY(-2px); }
-.contact-split__social svg { width: 19px; height: 19px; }
+.contact-split__social a[aria-label="Facebook"] { color: #1877F2; }
+.contact-split__social a[aria-label="Facebook"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+.contact-split__social a[aria-label="Instagram"] i {
+  background: linear-gradient(
+    45deg,
+    #fdcf4e 0%,
+    #f77737 20%,
+    #e1306c 45%,
+    #c13584 70%,
+    #833ab4 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.contact-split__social a[aria-label="Instagram"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+.contact-split__social a:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 .contact-split__form {
   display: flex;
   flex-direction: column;
@@ -1150,15 +1181,50 @@ body.page-about .eyebrow { font-size: 13px; letter-spacing: .16em; }
   padding: 0;
   border-radius: 0;
   background: none;
-  color: #fff;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   line-height: 1;
-  transition: color .22s ease;
+  transition: filter .22s ease;
 }
-.footer__bottom .footer__social a:hover {
+.footer__bottom .footer__social a[aria-label="Facebook"] {
+  color: #1877F2;
+  filter:
+    drop-shadow(0 0 1px rgba(255, 255, 255, .5))
+    drop-shadow(0 2px 10px rgba(24, 119, 242, .7));
+}
+.footer__bottom .footer__social a[aria-label="Facebook"]:hover {
   background: none;
   transform: none;
-  color: var(--gold);
+  filter:
+    drop-shadow(0 0 2px rgba(255, 255, 255, .65))
+    drop-shadow(0 2px 14px rgba(24, 119, 242, .9))
+    brightness(1.08);
+}
+.footer__bottom .footer__social a[aria-label="Instagram"] {
+  filter:
+    drop-shadow(0 0 1px rgba(255, 255, 255, .4))
+    drop-shadow(0 2px 10px rgba(225, 48, 108, .45));
+}
+.footer__bottom .footer__social a[aria-label="Instagram"] i {
+  background: linear-gradient(
+    45deg,
+    #fdcf4e 0%,
+    #f77737 20%,
+    #e1306c 45%,
+    #c13584 70%,
+    #833ab4 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.footer__bottom .footer__social a[aria-label="Instagram"]:hover {
+  background: none;
+  transform: none;
+  filter:
+    drop-shadow(0 0 2px rgba(255, 255, 255, .55))
+    drop-shadow(0 2px 14px rgba(225, 48, 108, .55))
+    brightness(1.08);
 }
 .footer__bottom .footer__social a:focus-visible {
   outline: 2px solid var(--gold);
