@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" role="img" aria-label="Dunrite">
+  <defs>
+    <linearGradient id="dr-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#19C6C2"/>
+      <stop offset="1" stop-color="#0E8F9E"/>
+    </linearGradient>
+  </defs>
+  <!-- Brandmark: rounded square with a confident checkmark (Done Right) -->
+  <g>
+    <rect x="2" y="6" width="52" height="52" rx="14" fill="#0B2545"/>
+    <path d="M16 33 l9 9 l17 -20" fill="none" stroke="url(#dr-grad)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Wordmark -->
+  <g fill="#0B2545" font-family="'Sora','Segoe UI',sans-serif">
+    <text x="68" y="34" font-size="27" font-weight="800" letter-spacing="-0.5">DUN<tspan fill="#0E8F9E">RITE</tspan></text>
+    <text x="69" y="50" font-size="9.5" font-weight="600" letter-spacing="3.4" fill="#5B6B7B">MOVING &#183; DELIVERY &#183; WASHING</text>
+  </g>
+</svg>

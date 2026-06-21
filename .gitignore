@@ -1,0 +1,20 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / local IDE
+*.swp
+*.swo
+*~
+
+# Secrets — never commit these
+.env
+.env.*
+*.pem
+
+# Logs
+*.log
+
+# Local dev scratch scripts
+assets/img/_find_pattern.py
