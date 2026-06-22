@@ -1325,14 +1325,9 @@ img.has-fallback { background: var(--mist); }
   .site-header {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    transition: background .35s var(--ease), box-shadow .35s var(--ease);
   }
   .site-header.is-menu-frozen { transition: none; }
-
-  html.nav-open,
-  html.nav-open body {
-    overflow: hidden;
-    touch-action: none;
-  }
 
   .nav__links {
     position: fixed;

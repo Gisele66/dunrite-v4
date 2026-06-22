@@ -23,20 +23,32 @@
   var menuLinks = nav ? nav.querySelector('.nav__links') : null;
   var mobileNavMq = window.matchMedia('(max-width: 980px)');
 
+  var blockBackgroundScroll = function (e) {
+    if (!nav || !nav.classList.contains('is-open')) return;
+    if (menuLinks && (menuLinks === e.target || menuLinks.contains(e.target))) return;
+    e.preventDefault();
+  };
+
   var setMenuOpen = function (open) {
     if (!nav || !toggle || !menuLinks) return;
 
-    nav.classList.toggle('is-open', open);
-    menuLinks.classList.toggle('is-panel-open', open);
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.documentElement.classList.toggle('nav-open', open);
-
-    if (header) {
-      header.classList.toggle('is-menu-frozen', open);
-    }
-
     if (open) {
       syncHeaderHeight();
+      nav.classList.add('is-open');
+      menuLinks.classList.add('is-panel-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.documentElement.classList.add('nav-open');
+      if (header) header.classList.add('is-menu-frozen');
+      document.addEventListener('touchmove', blockBackgroundScroll, { passive: false });
+      document.addEventListener('wheel', blockBackgroundScroll, { passive: false });
+    } else {
+      nav.classList.remove('is-open');
+      menuLinks.classList.remove('is-panel-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.documentElement.classList.remove('nav-open');
+      if (header) header.classList.remove('is-menu-frozen');
+      document.removeEventListener('touchmove', blockBackgroundScroll);
+      document.removeEventListener('wheel', blockBackgroundScroll);
     }
   };
 
