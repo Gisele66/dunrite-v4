@@ -1322,21 +1322,69 @@ img.has-fallback { background: var(--mist); }
   .nav__links, .nav__cta .nav__phone { display: none; }
   .nav__toggle { display: block; }
   .nav { grid-template-columns: auto 1fr auto; }
+  body.nav-open {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+  }
   .nav__links {
-    position: absolute; top: calc(100% + 10px); left: 16px; right: 16px;
-    display: none; flex-direction: column; align-items: stretch; justify-content: flex-start;
-    flex-wrap: nowrap; gap: 4px;
-    padding: 14px; border-radius: var(--radius); box-shadow: var(--shadow-lg);
+    position: fixed;
+    top: var(--site-header-height, 96px);
+    left: 32px;
+    right: 32px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 14px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
     border: 1px solid var(--line);
     background: #fff;
+    z-index: 110;
+    max-height: calc(100dvh - var(--site-header-height, 96px) - 16px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .nav.is-open .nav__links { display: flex; }
-  .nav__links a { color: var(--ink); padding: 14px; border-radius: 10px; white-space: normal; }
-  .nav__links a:hover { background: var(--mist); }
+  .nav__links a {
+    color: var(--ink);
+    padding: 14px;
+    border-radius: 10px;
+    white-space: normal;
+  }
+  .nav__links a.is-active { color: var(--teal); }
+  .nav__links a:hover { color: var(--ink); background: var(--mist); }
+  .site-header.is-stuck .nav__links a,
+  .site-header.is-stuck .nav__links a:hover {
+    color: var(--ink);
+    background: transparent;
+  }
+  .site-header.is-stuck .nav__links a:hover { background: var(--mist); }
+  .site-header.is-stuck .nav__links a.is-active { color: var(--teal); }
+
+  /* Travel routes — override ID-scoped 3-col grid on tablet/mobile */
+  #travel-routes .travel-routes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  #travel-routes .travel-routes__grid li {
+    min-width: 0;
+    padding: 18px 16px;
+    font-size: 1rem;
+  }
+  #travel-routes.section--travel-banner {
+    min-height: auto;
+    padding-block: 64px;
+    align-items: stretch;
+  }
 }
 @media (max-width: 720px) {
   .container { padding-inline: 24px; }
   .section { padding: 64px 0; }
+  .nav__links { left: 24px; right: 24px; }
   .nav__logo { width: var(--logo-brand-width-mobile); height: var(--logo-brand-width-mobile); }
   .site-header.is-stuck .nav__logo { width: var(--logo-brand-width-mobile-stuck); height: var(--logo-brand-width-mobile-stuck); }
   .site-header { padding: 18px 0 18px; }
@@ -1370,11 +1418,6 @@ img.has-fallback { background: var(--mist); }
   #moving-intro .moving-intro__copy {
     max-width: none;
   }
-  .travel-routes__grid { grid-template-columns: repeat(2, 1fr); }
-  #travel-routes.section--travel-banner {
-    min-height: auto;
-    padding-block: 64px;
-  }
 
   /* Footer — single column, full-width text on mobile */
   .footer__grid { grid-template-columns: 1fr; gap: 28px; }
@@ -1389,10 +1432,13 @@ img.has-fallback { background: var(--mist); }
   .footer__bottom-cell--spacer { display: none; }
   .footer__bottom-cell--social { justify-content: center; }
   .footer__social-anchor { width: auto !important; justify-content: center; }
+
+  body.page-schedule .service-card .schedule-steps li { overflow-wrap: anywhere; }
+  body.page-about .cta-band { padding: 40px 28px; }
 }
 @media (max-width: 480px) {
   .grid--4 { grid-template-columns: 1fr; }
-  .travel-routes__grid { grid-template-columns: 1fr; }
+  #travel-routes .travel-routes__grid { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
   body { font-size: 16px; }
 }
