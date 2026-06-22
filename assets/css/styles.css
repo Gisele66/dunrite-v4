@@ -1321,7 +1321,8 @@ img.has-fallback { background: var(--mist); }
 @media (max-width: 980px) {
   .nav__links, .nav__cta .nav__phone { display: none; }
   .nav__toggle { display: block; }
-  .nav { grid-template-columns: auto 1fr auto; }
+  .nav { grid-template-columns: auto 1fr auto; transform: none; }
+  .site-header:has(.nav.is-open) { backdrop-filter: none; }
   body.nav-open {
     position: fixed;
     width: 100%;
@@ -1339,31 +1340,33 @@ img.has-fallback { background: var(--mist); }
     flex-wrap: nowrap;
     gap: 4px;
     padding: 14px;
+    margin: 0;
+    list-style: none;
     border-radius: var(--radius);
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--line);
     background: #fff;
-    z-index: 110;
-    max-height: calc(100dvh - var(--site-header-height, 96px) - 16px);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    z-index: 200;
+    max-height: none;
+    overflow: visible;
   }
+  body.nav-open .nav__links,
   .nav.is-open .nav__links { display: flex; }
-  .nav__links a {
+  body.nav-open .nav__links a,
+  body.nav-open .site-header.is-stuck .nav__links a,
+  .nav.is-open .nav__links a {
     color: var(--ink);
     padding: 14px;
     border-radius: 10px;
     white-space: normal;
-  }
-  .nav__links a.is-active { color: var(--teal); }
-  .nav__links a:hover { color: var(--ink); background: var(--mist); }
-  .site-header.is-stuck .nav__links a,
-  .site-header.is-stuck .nav__links a:hover {
-    color: var(--ink);
     background: transparent;
   }
-  .site-header.is-stuck .nav__links a:hover { background: var(--mist); }
-  .site-header.is-stuck .nav__links a.is-active { color: var(--teal); }
+  body.nav-open .nav__links a.is-active,
+  .nav.is-open .nav__links a.is-active { color: var(--teal); }
+  body.nav-open .nav__links a:hover,
+  .nav.is-open .nav__links a:hover { color: var(--ink); background: var(--mist); }
+  body.nav-open .nav__links li,
+  .nav.is-open .nav__links li { display: flex; width: 100%; }
 
   /* Travel routes — override ID-scoped 3-col grid on tablet/mobile */
   #travel-routes .travel-routes__grid {
