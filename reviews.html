@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Reviews | Dunrite &mdash; Prince George to Haida Gwaii</title>
+  <meta name="description" content="Read what Dunrite clients say about moving, delivery, window washing and power washing across North Central BC and Haida Gwaii." />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=71" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Primary">
+        <a class="nav__logo" href="index.html" aria-label="Dunrite home">
+          <img src="assets/img/dunrite-dave-logo-original-1.png" alt="Dunrite Moving Deliveries" />
+        </a>
+        <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="moving.html">Moving</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="washing.html">Washing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav__cta">
+          <a class="nav__phone" href="tel:+12506490006">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (250) 649-0006
+          </a>
+          <a class="btn btn--primary" href="contact.html">Get a Free Estimate</a>
+          <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero page-hero--retro">
+      <div class="container">
+        <div class="page-hero__inner">
+          <p class="breadcrumb"><a href="index.html">Home</a> / Client Reviews</p>
+          <h1>What our clients say</h1>
+          <p>Trusted by homeowners and businesses across Prince George, North Central BC and Haida Gwaii.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="all-reviews">
+      <div class="container">
+        <div id="reviews-all-grid" class="grid grid--3 reviews-all-grid"></div>
+      </div>
+    </section>
+
+    <div id="review-modal" class="review-modal" hidden>
+      <div class="review-modal-backdrop" data-review-close></div>
+      <div class="review-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
+        <button type="button" class="review-modal-close" data-review-close aria-label="Close review form">&times;</button>
+        <h3 id="review-modal-title" class="review-modal-title">Leave a Review</h3>
+        <form id="review-form" class="review-form">
+          <label class="review-field-label" for="review-name">Your name</label>
+          <input type="text" id="review-name" name="name" class="review-field" required placeholder="Your name" autocomplete="name">
+          <label class="review-field-label" for="review-title">Review title <span class="review-optional">(optional)</span></label>
+          <input type="text" id="review-title" name="title" class="review-field" placeholder="e.g. Great job, Dunrite!" maxlength="80">
+          <fieldset class="review-stars-field">
+            <legend class="review-stars-label">Your rating</legend>
+            <div class="review-stars-input" id="review-stars-input" role="radiogroup" aria-label="Star rating">
+              <button type="button" class="review-star-btn" data-star="1" aria-label="1 star">&#9733;</button>
+              <button type="button" class="review-star-btn" data-star="2" aria-label="2 stars">&#9733;</button>
+              <button type="button" class="review-star-btn" data-star="3" aria-label="3 stars">&#9733;</button>
+              <button type="button" class="review-star-btn" data-star="4" aria-label="4 stars">&#9733;</button>
+              <button type="button" class="review-star-btn" data-star="5" aria-label="5 stars">&#9733;</button>
+            </div>
+            <input type="hidden" name="rating" id="review-rating" value="">
+          </fieldset>
+          <label class="review-field-label" for="review-comment">Your review</label>
+          <textarea id="review-comment" name="comment" class="review-field review-field--area" rows="5" required maxlength="200" placeholder="Tell us about your experience&hellip;"></textarea>
+          <p class="review-char-count" id="review-char-count" aria-live="polite">0 / 200</p>
+          <button type="submit" class="btn-review-submit">Submit Review</button>
+        </form>
+        <div id="review-thanks" class="review-thanks" hidden>
+          <p class="review-thanks-title">Thank you!</p>
+          <p class="review-thanks-text">We appreciate you taking the time to share your feedback.</p>
+          <button type="button" class="btn-review-submit" data-review-close>Close</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__logo"><img src="assets/img/dunrite-dave-logo-original-1.png" alt="Dunrite Moving Deliveries" /></div>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="moving.html">Residential Moving</a></li>
+            <li><a href="moving.html">Pickups &amp; Delivery</a></li>
+            <li><a href="washing.html">Window Washing</a></li>
+            <li><a href="washing.html">Power Washing</a></li>
+            <li><a href="washing.html">Gutter Cleaning &amp; Guards</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About &amp; Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Free Estimate</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a href="tel:+12506490006">Office: (250) 649-0006</a></li>
+            <li><a href="mailto:dunritedavedelivery@gmail.com">dunritedavedelivery@gmail.com</a></li>
+            <li><a href="mailto:dunritedave@gmail.com">dunritedave@gmail.com</a></li>
+            <li><span>Mon&ndash;Fri 9:30&ndash;5 &middot; Closed holidays</span></li>
+            <li><span class="footer__service-area-line">Prince George, BC &rarr; Haida Gwaii</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__bottom-cell footer__bottom-cell--logo">
+          <span class="footer__copyright">&copy; <span id="year">2026</span> Dunrite. All rights reserved.</span>
+        </div>
+        <div class="footer__bottom-cell footer__bottom-cell--spacer" aria-hidden="true"></div>
+        <div class="footer__bottom-cell footer__bottom-cell--spacer" aria-hidden="true"></div>
+        <div class="footer__bottom-cell footer__bottom-cell--social">
+          <div class="footer__social-anchor">
+            <div class="footer__social">
+              <a href="https://www.facebook.com/dunritedave/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+              <a href="https://www.instagram.com/dunritedave/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=72" defer></script>
+</body>
+</html>

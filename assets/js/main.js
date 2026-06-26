@@ -220,3 +220,249 @@
     });
   });
 })();
+
+/* ---- Client reviews (localStorage demo; wire to API later) ---- */
+(function () {
+  'use strict';
+
+  var staticReviews = [
+    {
+      name: 'Sarah M.',
+      rating: 5,
+      context: 'Residential move',
+      comment: 'Dave and Michelle moved our whole household to Haida Gwaii without a single scratch. They handle the routes nobody else will \u2014 couldn\'t recommend them more.'
+    },
+    {
+      name: 'Robert T.',
+      rating: 5,
+      context: 'Commercial window washing',
+      comment: 'Our storefront windows have never looked better. Reliable, on schedule every month, and always professional. A true local gem.'
+    },
+    {
+      name: 'Jenna K.',
+      rating: 5,
+      context: 'IKEA pickup & delivery',
+      comment: 'Picked up a big IKEA order and delivered it right to our door in Prince George. Fair price, great communication, total peace of mind.'
+    }
+  ];
+
+  var reviewModal = document.getElementById('review-modal');
+  var reviewForm = document.getElementById('review-form');
+  var reviewThanks = document.getElementById('review-thanks');
+  var reviewRating = document.getElementById('review-rating');
+  var reviewName = document.getElementById('review-name');
+  var reviewTitle = document.getElementById('review-title');
+  var reviewComment = document.getElementById('review-comment');
+  var reviewCharCount = document.getElementById('review-char-count');
+  var starButtons = document.querySelectorAll('.review-star-btn');
+  var reviewsAllGrid = document.getElementById('reviews-all-grid');
+  var reviewStorageKey = 'dunrite-reviews';
+  var reviewMaxLength = 200;
+  var lastReviewTrigger = null;
+
+  if (!reviewModal && !reviewsAllGrid) return;
+
+  function starsText(rating) {
+    var count = Math.max(1, Math.min(5, Number(rating) || 5));
+    var stars = '';
+    for (var i = 0; i < count; i += 1) stars += '\u2605';
+    return stars;
+  }
+
+  function avatarInitial(name) {
+    return (name.trim().charAt(0) || '?').toUpperCase();
+  }
+
+  function reviewContext(review) {
+    if (review.context && review.context.trim()) return review.context.trim();
+    if (review.title && review.title.trim()) return review.title.trim();
+    return 'Client review';
+  }
+
+  function formatQuote(comment) {
+    var trimmed = comment.trim();
+    return '"' + trimmed + '"';
+  }
+
+  function getSubmittedReviews() {
+    try {
+      var saved = localStorage.getItem(reviewStorageKey);
+      if (saved) return JSON.parse(saved);
+    } catch (error) {
+      localStorage.removeItem(reviewStorageKey);
+    }
+    return [];
+  }
+
+  function getAllDisplayReviews() {
+    var reviews = staticReviews.slice();
+    getSubmittedReviews().forEach(function (review) {
+      reviews.push(review);
+    });
+    return reviews;
+  }
+
+  function updateReviewCharCount() {
+    if (!reviewComment || !reviewCharCount) return;
+    var length = reviewComment.value.length;
+    reviewCharCount.textContent = length + ' / ' + reviewMaxLength;
+    reviewCharCount.classList.toggle('is-limit', length >= reviewMaxLength);
+  }
+
+  function createReviewCard(review) {
+    var card = document.createElement('div');
+    card.className = 'review';
+
+    var stars = document.createElement('div');
+    stars.className = 'stars';
+    stars.textContent = starsText(review.rating);
+    stars.setAttribute('aria-label', review.rating + ' out of 5 stars');
+
+    var body = document.createElement('p');
+    body.textContent = formatQuote(review.comment);
+
+    var who = document.createElement('div');
+    who.className = 'who';
+
+    var avatar = document.createElement('span');
+    avatar.className = 'avatar';
+    avatar.textContent = avatarInitial(review.name);
+
+    var meta = document.createElement('div');
+    var nameEl = document.createElement('b');
+    nameEl.textContent = review.name;
+    var contextEl = document.createElement('span');
+    contextEl.textContent = reviewContext(review);
+    meta.appendChild(nameEl);
+    meta.appendChild(contextEl);
+
+    who.appendChild(avatar);
+    who.appendChild(meta);
+    card.appendChild(stars);
+    card.appendChild(body);
+    card.appendChild(who);
+    return card;
+  }
+
+  function createReviewCtaCard() {
+    var card = document.createElement('div');
+    card.className = 'review review--cta';
+
+    var title = document.createElement('p');
+    title.className = 'review-cta__title';
+    title.textContent = 'Share Your Experience';
+
+    var body = document.createElement('p');
+    body.textContent = 'Had a great experience with Dunrite? We would love to hear from you.';
+
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn-review-open';
+    button.textContent = 'Leave a Review';
+
+    card.appendChild(title);
+    card.appendChild(body);
+    card.appendChild(button);
+    return card;
+  }
+
+  function renderAllReviewsGrid() {
+    if (!reviewsAllGrid) return;
+    reviewsAllGrid.innerHTML = '';
+    getAllDisplayReviews().forEach(function (review) {
+      reviewsAllGrid.appendChild(createReviewCard(review));
+    });
+    reviewsAllGrid.appendChild(createReviewCtaCard());
+  }
+
+  function saveSubmittedReview(review) {
+    var reviews = getSubmittedReviews();
+    reviews.push(review);
+    localStorage.setItem(reviewStorageKey, JSON.stringify(reviews));
+    renderAllReviewsGrid();
+  }
+
+  function setReviewStars(rating) {
+    if (!reviewRating) return;
+    reviewRating.value = rating ? String(rating) : '';
+    starButtons.forEach(function (btn) {
+      var star = Number(btn.getAttribute('data-star'));
+      btn.classList.toggle('is-active', star <= rating);
+      btn.setAttribute('aria-pressed', star <= rating ? 'true' : 'false');
+    });
+  }
+
+  function openReviewModal(trigger) {
+    if (!reviewModal) return;
+    lastReviewTrigger = trigger || null;
+    reviewModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    var firstFocus = reviewModal.querySelector('#review-name');
+    if (firstFocus) firstFocus.focus();
+  }
+
+  function closeReviewModal() {
+    if (!reviewModal) return;
+    reviewModal.hidden = true;
+    document.body.style.overflow = '';
+    if (reviewForm) reviewForm.hidden = false;
+    if (reviewThanks) reviewThanks.hidden = true;
+    if (reviewForm) reviewForm.reset();
+    setReviewStars(0);
+    updateReviewCharCount();
+    if (lastReviewTrigger) lastReviewTrigger.focus();
+  }
+
+  document.addEventListener('click', function (event) {
+    var openBtn = event.target.closest('.btn-review-open');
+    if (openBtn) {
+      event.preventDefault();
+      openReviewModal(openBtn);
+    }
+  });
+
+  if (reviewModal) {
+    reviewModal.querySelectorAll('[data-review-close]').forEach(function (el) {
+      el.addEventListener('click', closeReviewModal);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !reviewModal.hidden) {
+        closeReviewModal();
+      }
+    });
+  }
+
+  starButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setReviewStars(Number(btn.getAttribute('data-star')));
+    });
+  });
+
+  if (reviewComment) {
+    reviewComment.addEventListener('input', updateReviewCharCount);
+    updateReviewCharCount();
+  }
+
+  if (reviewForm) {
+    reviewForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (!reviewRating || !reviewRating.value) {
+        var firstStar = reviewModal && reviewModal.querySelector('.review-star-btn');
+        if (firstStar) firstStar.focus();
+        return;
+      }
+      var review = {
+        name: reviewName ? reviewName.value.trim() : '',
+        title: reviewTitle ? reviewTitle.value.trim() : '',
+        rating: Number(reviewRating.value),
+        comment: reviewComment ? reviewComment.value.trim() : ''
+      };
+      saveSubmittedReview(review);
+      if (reviewForm) reviewForm.hidden = true;
+      if (reviewThanks) reviewThanks.hidden = false;
+    });
+  }
+
+  renderAllReviewsGrid();
+})();
